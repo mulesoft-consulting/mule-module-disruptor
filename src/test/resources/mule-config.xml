@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:spring="http://www.springframework.org/schema/beans"
+      xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+      xmlns:disruptor="http://www.mulesoft.org/schema/mule/disruptor"
+      xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+        http://www.mulesoft.org/schema/mule/disruptor
+        http://www.mulesoft.org/schema/mule/disruptor/1.0-SNAPSHOT/mule-disruptor.xsd">
+
+
+    <custom-processing-strategy name="disruptorProcessingStrategy"
+                                class="org.mule.module.disruptor.DisruptorProcessingStrategy" />
+
+    <thread-per-processor-processing-strategy name="threadPerProcessorStrategy"/>
+
+    <flow name="testFlow" processingStrategy="disruptorProcessingStrategy">
+        <vm:inbound-endpoint path="in"/>
+        <logger message="FOO: #[payload]" level="INFO"/>
+        <logger message="FOO: #[payload]" level="INFO"/>
+        <logger message="FOO: #[payload]" level="INFO"/>
+        <logger message="FOO: #[payload]" level="INFO"/>
+        <vm:outbound-endpoint path="out"/>
+    </flow>
+
+</mule>
