@@ -5,12 +5,10 @@ import org.mule.api.processor.MessageProcessor;
 import org.mule.api.processor.MessageProcessorBuilder;
 import org.mule.api.processor.MessageProcessorChainBuilder;
 import org.mule.api.processor.ProcessingStrategy;
-import org.mule.processor.strategy.SynchronousProcessingStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class DisruptorProcessingStrategy implements ProcessingStrategy {
+public class RingBufferPerProcessorProcessingStrategy implements ProcessingStrategy {
 
     @Override
     public void configureProcessors(List<MessageProcessor> processors,
@@ -26,7 +24,7 @@ public class DisruptorProcessingStrategy implements ProcessingStrategy {
 
             if (processor instanceof MessageProcessor)
             {
-                builder.chain(new DisruptorInterceptingMessageProcessor(processor));
+                builder.chain(new RingBufferInterceptingMessageProcessor(processor));
             }
             else if (processor instanceof MessageProcessorBuilder)
             {
@@ -42,7 +40,7 @@ public class DisruptorProcessingStrategy implements ProcessingStrategy {
 //        List<MessageProcessor> wrappedProcessors = new ArrayList<MessageProcessor>(processors.size());
 //
 //        for (MessageProcessor processor : wrappedProcessors) {
-//            wrappedProcessors.add(new DisruptorInterceptingMessageProcessor(processor));
+//            wrappedProcessors.add(new RingBufferInterceptingMessageProcessor(processor));
 //        }
 //
 //
@@ -53,7 +51,7 @@ public class DisruptorProcessingStrategy implements ProcessingStrategy {
 
 //        if (wrappedProcessors.size() > 0)
 //        {
-//            chainBuilder.chain(new DisruptorInterceptingMessageProcessor());
+//            chainBuilder.chain(new RingBufferInterceptingMessageProcessor());
 //            synchronousProcessingStrategy.configureProcessors(processors, nameSource, chainBuilder,
 //                    muleContext);
 //        }

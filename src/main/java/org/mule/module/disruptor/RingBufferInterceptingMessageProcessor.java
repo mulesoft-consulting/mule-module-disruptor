@@ -11,11 +11,11 @@ import org.mule.api.processor.MessageProcessor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class DisruptorInterceptingMessageProcessor implements MessageProcessor {
+public class RingBufferInterceptingMessageProcessor implements MessageProcessor {
 
     RingBuffer<MuleEventHolder> ringBuffer;
 
-    public DisruptorInterceptingMessageProcessor(MessageProcessor processor) {
+    public RingBufferInterceptingMessageProcessor(MessageProcessor processor) {
 
         ExecutorService exec = Executors.newCachedThreadPool();
         Disruptor<MuleEventHolder> disruptor = new Disruptor<MuleEventHolder>(new MuleEventFactory(), 1024, exec);

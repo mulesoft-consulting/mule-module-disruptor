@@ -12,13 +12,12 @@
         http://www.mulesoft.org/schema/mule/disruptor
         http://www.mulesoft.org/schema/mule/disruptor/1.0-SNAPSHOT/mule-disruptor.xsd">
 
-
-    <custom-processing-strategy name="disruptorProcessingStrategy"
-                                class="org.mule.module.disruptor.DisruptorProcessingStrategy" />
+    <custom-processing-strategy name="ringBufferPerProcessorProcessingStrategy"
+                                class="org.mule.module.disruptor.RingBufferPerProcessorProcessingStrategy" />
 
     <thread-per-processor-processing-strategy name="threadPerProcessorStrategy"/>
 
-    <flow name="testFlow" processingStrategy="disruptorProcessingStrategy">
+    <flow name="testFlow" processingStrategy="ringBufferPerProcessorProcessingStrategy">
         <vm:inbound-endpoint path="in"/>
         <logger message="FOO: #[payload]" level="INFO"/>
         <logger message="FOO: #[payload]" level="INFO"/>
